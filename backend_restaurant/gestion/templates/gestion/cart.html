@@ -1,0 +1,52 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Mi Carrito de Compras{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Mi Carrito de Compras</h2>
+    <hr>
+
+    {% if not items %}
+        <div class="alert alert-info" role="alert">
+            Tu carrito está vacío. <a href="{% url 'homepage' %}" class="alert-link">¡Mira nuestro menú!</a>
+        </div>
+    {% else %}
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Platillo</th>
+                    <th>Precio Unitario</th>
+                    <th style="width: 15%;">Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td>${{ item.precio }}</td>
+                    <td>
+                        <form action="{% url 'update_cart' item.id %}" method="post" class="d-flex">
+                            {% csrf_token %}
+                            <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" class="form-control form-control-sm" style="width: 70px;">
+                            <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Actualizar</button>
+                        </form>
+                    </td>
+                    <td>${{ item.subtotal|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-end">
+            <h3>Total del Pedido: ${{ total|floatformat:2 }}</h3>
+            <hr>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

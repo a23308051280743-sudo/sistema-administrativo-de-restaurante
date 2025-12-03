@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menú del Restaurante</title>
+</head>
+<body>
+    <h1>Nuestro Menú</h1>
+    {% for platillo in platillos %}
+        <h2>{{ platillo.nombre }}</h2>
+        <p>{{ platillo.descripcion }}</p>
+        <p><strong>Precio:</strong> ${{ platillo.precio }}</p>
+        <hr>
+    {% endfor %}
+</body>
+</html>

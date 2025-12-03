@@ -1,0 +1,21 @@
+
+{% extends 'gestion/base.html' %}
+
+{% block title %}Detalle del Platillo: {{ platillo.nombre }}{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <h2>{{ platillo.nombre }}</h2>
+    <div class="detail-content">
+        <p><strong>Descripción:</strong> {{ platillo.descripcion }}</p>
+        <p><strong>Precio:</strong> ${{ platillo.precio }}</p>
+        <p><strong>Categoría:</strong> {{ platillo.categoria }}</p>
+        <p><strong>Tiempo de Preparación:</strong> {{ platillo.tiempo_preparacion }} minutos</p>
+    </div>
+    <div class="detail-actions">
+        <a href="{% url 'platillo-list' %}" class="btn btn-secondary">Volver a la Lista</a>
+        <a href="{% url 'platillo-update' platillo.pk %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'platillo-delete' platillo.pk %}" class="btn btn-danger">Eliminar</a>
+    </div>
+</div>
+{% endblock %}

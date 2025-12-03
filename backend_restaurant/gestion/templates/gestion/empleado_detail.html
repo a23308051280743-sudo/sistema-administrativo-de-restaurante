@@ -1,0 +1,18 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Detalle del Empleado: {{ empleado.nombre }}{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <h2>{{ empleado.nombre }}</h2>
+    <div class="detail-content">
+        <p><strong>Puesto:</strong> {{ empleado.puesto }}</p>
+        <p><strong>Fecha de Contratación:</strong> {{ empleado.fecha_contratacion|date:"d/m/Y" }}</p>
+    </div>
+    <div class="detail-actions">
+        <a href="{% url 'empleado-list' %}" class="btn btn-secondary">Volver a la Lista</a>
+        <a href="{% url 'empleado-update' empleado.pk %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'empleado-delete' empleado.pk %}" class="btn btn-danger">Eliminar</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Pedido Confirmado{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">¡Gracias por tu pedido!</h4>
+        <p>Hemos recibido tu pedido y ya lo estamos preparando. Tu número de referencia es el <strong>#{{ pedido.id }}</strong>.</p>
+        <hr>
+        <p class="mb-0">Pronto un repartidor se pondrá en contacto contigo.</p>
+    </div>
+    <a href="{% url 'homepage' %}" class="btn btn-primary">Volver al Menú</a>
+</div>
+{% endblock %}

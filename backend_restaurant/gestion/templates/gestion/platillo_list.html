@@ -1,0 +1,35 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Gestionar Platillos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Platillos del Menú</h1>
+        <a href="{% url 'platillo_new' %}" class="btn btn-primary">Añadir Nuevo Platillo</a>
+    </div>
+
+    <div class="list-group">
+        {% for platillo in platillos %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ platillo.nombre }}</h5>
+                    <small class="text-muted">{{ platillo.categoria }}</small>
+                </div>
+                <p class="mb-1">{{ platillo.descripcion }}</p>
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                    <small class="text-success fw-bold">${{ platillo.precio }}</small>
+                    <div>
+                        <a href="{% url 'platillo_edit' platillo.pk %}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <a href="{% url 'platillo_delete' platillo.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info" role="alert">
+                No hay platillos registrados todavía. ¡Añade el primero!
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

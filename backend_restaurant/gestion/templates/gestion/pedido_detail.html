@@ -1,0 +1,75 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Detalle del Pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <h2>Detalles del Pedido #{{ pedido.id }}</h2>
+    <div class="detail-content">
+        <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+        <p><strong>Atendido por:</strong> {{ pedido.empleado }}</p>
+        <p><strong>Fecha y Hora:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</p>
+        <p><strong>Estado:</strong> <span class="status status-{{ pedido.estado_pedido }}">{{ pedido.get_estado_pedido_display }}</span></p>
+    </div>
+
+    <!-- Sección para los detalles del pedido -->
+    <div class="related-list-container">
+        <h3>Platillos en este Pedido</h3>
+        <table class="table-list">
+            <thead>
+                <tr>
+                    <th>Platillo</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in pedido.detalles.all %}
+                <tr>
+                    <td>{{ detalle.platillo.nombre }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>${{ detalle.precio_unitario|floatformat:2 }}</td>
+                    <td>${{ detalle.subtotal|floatformat:2 }}</td>
+                    <td class="actions">
+                        <form action="{% url 'detalle-pedido-delete' detalle.pk %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Aún no se han añadido platillos a este pedido.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" style="text-align: right;"><strong>Total del Pedido:</strong></td>
+                    <td><strong>${{ pedido.total|floatformat:2 }}</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Formulario para añadir nuevos platillos al pedido -->
+        <div class="form-container inline-form">
+            <h4>Añadir Platillo al Pedido</h4>
+            <form action="{% url 'add-detalle-pedido' pedido.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-grid-inline">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Añadir Platillo</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'pedido-list' %}" class="btn btn-secondary">Volver a la Lista</a>
+        <a href="{% url 'pedido-update' pedido.pk %}" class="btn btn-warning">Actualizar Estado</a>
+        <a href="{% url 'pedido-delete' pedido.pk %}" class="btn btn-danger">Eliminar Pedido</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Nuestro Menú - El Buen Sabor{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h2>Nuestro Menú</h2>
+    <p class="lead">Tradición y sabor en cada platillo</p>
+</div>
+
+<div class="row">
+    {% for platillo in platillos %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ platillo.nombre }}</h5>
+                <p class="card-text flex-grow-1">{{ platillo.descripcion }}</p>
+                <p class="text-muted">Categoría: {{ platillo.categoria }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <p class="price mb-0">${{ platillo.precio|stringformat:".2f" }}</p>
+                    <a href="{% url 'add_to_cart' platillo.id %}" class="btn btn-success">Añadir al Carrito</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p class="text-center">No hay platillos disponibles en este momento.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

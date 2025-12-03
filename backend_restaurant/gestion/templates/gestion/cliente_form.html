@@ -1,0 +1,32 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Registro de Cliente - El Buen Sabor{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Registro de Nuevo Cliente</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">Crea una cuenta para hacer tus pedidos más rápido.</p>
+                    <form method="post">
+                        {% csrf_token %} <!-- Medida de seguridad de Django -->
+                        
+                        {{ form.as_p }}
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg mt-3">Registrarme</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'homepage' %}">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

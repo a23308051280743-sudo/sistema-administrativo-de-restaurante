@@ -1,0 +1,18 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Detalle del Cliente: {{ cliente.nombre }}{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <h2>{{ cliente.nombre }}</h2>
+    <div class="detail-content">
+        <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+        <p><strong>Email:</strong> {{ cliente.email }}</p>
+    </div>
+    <div class="detail-actions">
+        <a href="{% url 'cliente-list' %}" class="btn btn-secondary">Volver a la Lista</a>
+        <a href="{% url 'cliente-update' cliente.pk %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'cliente-delete' cliente.pk %}" class="btn btn-danger">Eliminar</a>
+    </div>
+</div>
+{% endblock %}
